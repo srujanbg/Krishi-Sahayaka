@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#166534">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Krishi Sahayaka">
+<title>Krishi Sahayaka · Karnataka Farmer Assistant</title>
+<link rel="manifest" href='data:application/manifest+json,{"name":"Krishi Sahayaka","short_name":"Krishi Sahayaka","display":"standalone","background_color":"%23052e16","theme_color":"%23166534","start_url":"./index.html","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23166534%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2258%22 text-anchor=%22middle%22%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+<style>
+  :root{--bg:#f0fdf4;--card:#fff;--text:#0f172a;--muted:#64748b;--accent:#166534;--accent2:#16a34a;--soft:#dcfce7;--border:#e2e8f0;--ok:#15803d;--warn:#b45309;--sky:#0284c7;--danger:#dc2626;--shadow:0 4px 16px rgba(22,101,52,.08);}
+  [data-theme="dark"]{--bg:#052e16;--card:#0f2e1c;--text:#ecfdf5;--muted:#94a3b8;--accent:#22c55e;--accent2:#4ade80;--soft:#14532d;--border:#1e3a2a;--ok:#4ade80;--warn:#fbbf24;--sky:#38bdf8;--danger:#f87171;--shadow:0 4px 16px rgba(0,0,0,.4);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Kannada",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);transition:background .3s,color .3s;}
+  header{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:calc(env(safe-area-inset-top) + 16px) 18px 16px;box-shadow:0 2px 12px rgba(0,0,0,.18);}
+  .head-row{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  header h1{margin:0;font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:8px;}
+  header p{margin:3px 0 0;font-size:.78rem;opacity:.9;}
+  .head-btns{display:flex;gap:8px;flex-shrink:0;}
+  .icon-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:1rem;font-weight:700;height:40px;border-radius:20px;cursor:pointer;padding:0 14px;display:flex;align-items:center;gap:5px;}
+  .icon-btn.round{width:40px;padding:0;justify-content:center;font-size:1.2rem;}
+  .icon-btn:active{background:rgba(255,255,255,.35);}
+  .wrap{max-width:640px;margin:0 auto;padding:16px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px;}
+  .card h2{margin:0 0 14px;font-size:1.02rem;font-weight:700;display:flex;align-items:center;gap:8px;}
+  label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin:0 0 6px;}
+  .field{margin-bottom:14px;}
+  select,input[type=number],input[type=text]{width:100%;padding:12px 13px;font-size:.95rem;border:1px solid var(--border);border-radius:11px;background:var(--bg);color:var(--text);outline:none;appearance:none;font-family:inherit;}
+  select:focus,input:focus{border-color:var(--accent);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .btn{width:100%;padding:15px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow);font-family:inherit;}
+  .btn:active{transform:scale(.98);}
+  .tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{flex-shrink:0;padding:10px 15px;border:1.5px solid var(--border);border-radius:12px;font-size:.84rem;font-weight:700;cursor:pointer;background:var(--card);color:var(--muted);white-space:nowrap;}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .weather{background:linear-gradient(135deg,var(--sky),#0ea5e9);color:#fff;border:none;text-align:center;}
+  .weather .big{font-size:3.2rem;line-height:1;margin:6px 0;}
+  .weather .temp{font-size:2.4rem;font-weight:800;} .weather .cond{font-size:1rem;opacity:.95;margin-top:4px;}
+  .wgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px;}
+  .wcell{background:rgba(255,255,255,.15);border-radius:12px;padding:10px 6px;} .wcell .v{font-size:1.05rem;font-weight:800;} .wcell .l{font-size:.68rem;opacity:.9;margin-top:3px;}
+  .forecast{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;} .forecast::-webkit-scrollbar{display:none;}
+  .fday{flex-shrink:0;background:rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;text-align:center;min-width:78px;}
+  .fday .d{font-size:.72rem;opacity:.9;} .fday .i{font-size:1.5rem;margin:4px 0;} .fday .t{font-size:.8rem;font-weight:700;}
+  .rain-alert{margin-top:14px;background:rgba(255,255,255,.2);border-radius:12px;padding:10px 14px;font-size:.85rem;font-weight:600;}
+  .mkt{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+  .mkt:last-child{border-bottom:none;} .mkt.best{background:var(--soft);border-radius:12px;padding:12px;border-bottom:none;margin-bottom:4px;}
+  .mkt .name{font-weight:700;font-size:.95rem;} .mkt .sub{font-size:.74rem;color:var(--muted);margin-top:2px;}
+  .mkt .price{font-size:1.05rem;font-weight:800;color:var(--accent);text-align:right;} .mkt .trend{font-size:.72rem;font-weight:700;margin-top:2px;text-align:right;}
+  .best-badge{display:inline-block;font-size:.62rem;font-weight:800;background:var(--accent);color:#fff;padding:2px 7px;border-radius:10px;margin-left:6px;}
+  .up{color:var(--ok);} .down{color:var(--danger);}
+  .adv-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+  .adv-row:last-child{border-bottom:none;} .adv-ico{font-size:1.4rem;flex-shrink:0;}
+  .adv-row .h{font-weight:700;font-size:.9rem;} .adv-row .b{font-size:.84rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+  .scheme{border-left:5px solid var(--accent);} .scheme .name{font-weight:700;font-size:.96rem;} .scheme .dept{font-size:.72rem;color:var(--muted);margin-top:2px;}
+  .scheme .amt{font-size:1.05rem;font-weight:800;color:var(--accent);margin:8px 0 6px;} .scheme .desc{font-size:.84rem;color:var(--muted);line-height:1.45;}
+  .apply{display:inline-block;margin-top:10px;font-size:.8rem;font-weight:700;color:#fff;background:var(--accent);text-decoration:none;padding:8px 16px;border-radius:10px;}
+  .fert-out{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px;}
+  .fcell{background:var(--soft);border-radius:14px;padding:16px 8px;text-align:center;} .fcell .v{font-size:1.5rem;font-weight:800;color:var(--accent);} .fcell .l{font-size:.74rem;color:var(--muted);margin-top:4px;font-weight:600;}
+  .fnote{font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.5;text-align:center;}
+  .drop{border:2px dashed var(--accent);border-radius:16px;padding:26px 16px;text-align:center;background:var(--soft);cursor:pointer;}
+  .drop .ico{font-size:2.6rem;} .drop .txt{font-size:.9rem;font-weight:700;color:var(--accent);margin-top:8px;} .drop .sub{font-size:.76rem;color:var(--muted);margin-top:4px;}
+  .preview{width:100%;max-height:280px;object-fit:contain;border-radius:14px;margin-top:12px;background:#000;}
+  .diag{border-left:5px solid var(--accent);} .diag.warn{border-left-color:var(--warn);} .diag.bad{border-left-color:var(--danger);}
+  .diag .cond{font-size:1.15rem;font-weight:800;}
+  .conf-wrap{background:var(--border);border-radius:10px;height:12px;overflow:hidden;margin:10px 0;}
+  .conf-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px;}
+  .treat h4{margin:0 0 4px;font-size:.86rem;} .treat p{margin:0 0 10px;font-size:.84rem;color:var(--muted);line-height:1.45;}
+  .dose{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:.88rem;font-weight:700;color:var(--accent);}
+  .speak{margin-top:10px;font-size:.8rem;font-weight:700;color:var(--accent);background:var(--soft);border:none;padding:8px 14px;border-radius:10px;cursor:pointer;}
+  .helpline{display:flex;align-items:center;gap:12px;background:var(--soft);border-radius:14px;padding:14px;}
+  .helpline .n{font-size:1.15rem;font-weight:800;color:var(--accent);}
+  .muted{font-size:.78rem;color:var(--muted);line-height:1.5;}
+  .hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+  .hidden{display:none!important;}
+  .disclaimer{font-size:.72rem;color:var(--muted);text-align:center;line-height:1.5;padding:6px 4px 26px;max-width:640px;margin:0 auto;}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row">
+    <div><h1>🌿 <span data-i18n="appName"></span></h1><p data-i18n="tagline"></p></div>
+    <div class="head-btns"><button class="icon-btn" id="langBtn"></button><button class="icon-btn round" id="themeBtn">🌙</button></div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h2>👨‍🌾 <span data-i18n="yourFarm"></span></h2>
+    <div class="grid2">
+      <div class="field"><label data-i18n="district"></label><select id="district"></select></div>
+      <div class="field"><label data-i18n="taluk"></label><select id="taluk"></select></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label data-i18n="hobli"></label><input type="text" id="hobli" autocomplete="off"></div>
+      <div class="field"><label data-i18n="village"></label><input type="text" id="village" autocomplete="off"></div>
+    </div>
+    <div class="hint" data-i18n="locHint"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="field"><label data-i18n="crop"></label><select id="crop"></select></div>
+      <div class="field"><label data-i18n="landSize"></label><input type="number" id="land" min="0" step="0.5" value="2"></div>
+    </div>
+    <div class="field"><label data-i18n="irrigation"></label>
+      <select id="irrigation"><option value="irrigated" data-i18n-opt="irrigated"></option><option value="rainfed" data-i18n-opt="rainfed"></option></select>
+    </div>
+    <button class="btn" id="goBtn"></button>
+  </div>
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-tab="weather" data-i18n="tab_weather"></div>
+    <div class="tab" data-tab="doctor" data-i18n="tab_doctor"></div>
+    <div class="tab" data-tab="market" data-i18n="tab_market"></div>
+    <div class="tab" data-tab="advisory" data-i18n="tab_advisory"></div>
+    <div class="tab" data-tab="fertilizer" data-i18n="tab_fertilizer"></div>
+    <div class="tab" data-tab="schemes" data-i18n="tab_schemes"></div>
+    <div class="tab" data-tab="help" data-i18n="tab_help"></div>
+  </div>
+  <div id="panel"></div>
+</div>
+<p class="disclaimer" id="disclaimer"></p>
+<script>
+
+const I18N = {
+  en:{
+    appName:"Krishi Sahayaka", tagline:"Karnataka Farmer Assistant · ಕೃಷಿ ಸಹಾಯಕ", langLabel:"ಕನ್ನಡ",
+    yourFarm:"Your farm details", district:"District", taluk:"Taluk", hobli:"Hobli (type)", village:"Village (type)",
+    locHint:"Pick your district & taluk from the list. Type your hobli & village name (any spelling works).",
+    crop:"Crop", landSize:"Land size (acres)", irrigation:"Water source", irrigated:"Irrigated", rainfed:"Rain-fed",
+    go:"🌾 Get my farm dashboard",
+    tab_weather:"🌦️ Weather", tab_doctor:"🩺 Crop Doctor", tab_market:"💰 Market", tab_advisory:"🌱 Advisory",
+    tab_fertilizer:"🧮 Fertilizer", tab_schemes:"🏛️ Schemes", tab_help:"📞 Help",
+    humidity:"Humidity", wind:"Wind", rainChance:"Rain chance", forecast5:"5-day forecast",
+    rainYes:"🌧️ Rain likely soon — plan irrigation & spraying accordingly.", rainNo:"☀️ Mostly dry ahead — good for field work & harvesting.",
+    marketNote:"Approximate mandi prices per quintal. Confirm at your local APMC.", perQuintal:"/quintal", bestSell:"Best place to sell",
+    advSeason:"Best sowing season", advWater:"Irrigation", advFert:"Fertilizer schedule", advHarvest:"Harvest period", advTip:"Key tip", listen:"🔊 Listen",
+    schemesNote:"Central & Karnataka farmer schemes. Verify on official portals.",
+    fertTitle:"Fertilizer estimate for your crop", fertFor:"For", acres:"acres of",
+    fertNote:"Split doses across growth stages. Get a soil health card for exact needs. 1 acre ≈ 0.4 ha.", urea:"Urea", dap:"DAP", potash:"Potash", kg:"kg",
+    doctorTitle:"Crop Doctor — leaf disease check",
+    doctorIntro:"Take or upload a clear photo of the affected leaf. Krishi Sahayaka analyses the leaf colours to suggest the likely problem and treatment.",
+    dropTxt:"📷 Take / Upload leaf photo", dropSub:"Tap to open camera or choose an image", analyze:"🔬 Analyse leaf",
+    detected:"Likely condition", confidence:"Confidence", organic:"🌿 Organic remedy", chemical:"🧪 Chemical remedy", prevention:"🛡️ Prevention",
+    doseFor:"Dose for your", orPick:"Or pick the symptom you see:", symPrompt:"Select a symptom",
+    doctorDisclaimer:"⚠️ Preliminary colour-based screening, not a lab diagnosis. Confirm at your Raitha Samparka Kendra before applying chemicals. Follow label dosage & safety.",
+    c_healthy:"Healthy leaf", c_blight:"Leaf blight / spot", c_powdery:"Powdery mildew", c_rust:"Rust disease", c_yellowing:"Yellowing / nutrient deficiency",
+    helpTitle:"Farmer helplines", kcc:"Kisan Call Centre (toll-free)", kisanNote:"Free farming advice in Kannada, 6 AM–10 PM.",
+    agriDept:"Karnataka Agriculture Dept", shareApp:"📤 Share this app", shareText:"Krishi Sahayaka — free farmer assistant for Karnataka:",
+    disclaimer:"ℹ️ Krishi Sahayaka is an unofficial guidance tool. Weather & prices shown are indicative demo data — confirm with official sources (IMD, APMC, agri dept) before decisions."
+  },
+  kn:{
+    appName:"ಕೃಷಿ ಸಹಾಯಕ", tagline:"ಕರ್ನಾಟಕ ರೈತರ ಸಹಾಯಕ · Karnataka Farmer Assistant", langLabel:"English",
+    yourFarm:"ನಿಮ್ಮ ಜಮೀನಿನ ವಿವರಗಳು", district:"ಜಿಲ್ಲೆ", taluk:"ತಾಲೂಕು", hobli:"ಹೋಬಳಿ (ಟೈಪ್)", village:"ಗ್ರಾಮ (ಟೈಪ್)",
+    locHint:"ಪಟ್ಟಿಯಿಂದ ಜಿಲ್ಲೆ ಮತ್ತು ತಾಲೂಕು ಆಯ್ಕೆಮಾಡಿ. ಹೋಬಳಿ ಮತ್ತು ಗ್ರಾಮದ ಹೆಸರನ್ನು ಟೈಪ್ ಮಾಡಿ.",
+    crop:"ಬೆಳೆ", landSize:"ಭೂಮಿ ವಿಸ್ತೀರ್ಣ (ಎಕರೆ)", irrigation:"ನೀರಿನ ಮೂಲ", irrigated:"ನೀರಾವರಿ", rainfed:"ಮಳೆಯಾಶ್ರಿತ",
+    go:"🌾 ನನ್ನ ಕೃಷಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಪಡೆಯಿರಿ",
+    tab_weather:"🌦️ ಹವಾಮಾನ", tab_doctor:"🩺 ಬೆಳೆ ವೈದ್ಯ", tab_market:"💰 ಮಾರುಕಟ್ಟೆ", tab_advisory:"🌱 ಸಲಹೆ",
+    tab_fertilizer:"🧮 ಗೊಬ್ಬರ", tab_schemes:"🏛️ ಯೋಜನೆಗಳು", tab_help:"📞 ಸಹಾಯ",
+    humidity:"ಆರ್ದ್ರತೆ", wind:"ಗಾಳಿ", rainChance:"ಮಳೆ ಸಾಧ್ಯತೆ", forecast5:"5 ದಿನಗಳ ಮುನ್ಸೂಚನೆ",
+    rainYes:"🌧️ ಶೀಘ್ರದಲ್ಲೇ ಮಳೆ ಸಾಧ್ಯತೆ — ನೀರಾವರಿ ಮತ್ತು ಸಿಂಪಡಣೆ ಯೋಜಿಸಿ.", rainNo:"☀️ ಮುಂದೆ ಒಣ ಹವೆ — ಜಮೀನಿನ ಕೆಲಸ ಮತ್ತು ಕಟಾವಿಗೆ ಉತ್ತಮ.",
+    marketNote:"ಪ್ರತಿ ಕ್ವಿಂಟಾಲ್‌ಗೆ ಅಂದಾಜು ಮಂಡಿ ಬೆಲೆ. ನಿಮ್ಮ ಸ್ಥಳೀಯ APMC ನಲ್ಲಿ ಖಚಿತಪಡಿಸಿ.", perQuintal:"/ಕ್ವಿಂಟಾಲ್", bestSell:"ಮಾರಾಟಕ್ಕೆ ಉತ್ತಮ ಸ್ಥಳ",
+    advSeason:"ಉತ್ತಮ ಬಿತ್ತನೆ ಋತು", advWater:"ನೀರಾವರಿ", advFert:"ಗೊಬ್ಬರ ವೇಳಾಪಟ್ಟಿ", advHarvest:"ಕಟಾವಿನ ಅವಧಿ", advTip:"ಮುಖ್ಯ ಸಲಹೆ", listen:"🔊 ಕೇಳಿ",
+    schemesNote:"ಕೇಂದ್ರ ಮತ್ತು ಕರ್ನಾಟಕ ರೈತ ಯೋಜನೆಗಳು. ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ.",
+    fertTitle:"ನಿಮ್ಮ ಬೆಳೆಗೆ ಗೊಬ್ಬರ ಅಂದಾಜು", fertFor:"ಗಾಗಿ", acres:"ಎಕರೆ",
+    fertNote:"ಬೆಳವಣಿಗೆ ಹಂತಗಳಲ್ಲಿ ಪ್ರಮಾಣ ವಿಂಗಡಿಸಿ. ನಿಖರ ಅಗತ್ಯಕ್ಕೆ ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್ ಪಡೆಯಿರಿ. 1 ಎಕರೆ ≈ 0.4 ಹೆ.", urea:"ಯೂರಿಯಾ", dap:"ಡಿಎಪಿ", potash:"ಪೊಟ್ಯಾಶ್", kg:"ಕೆಜಿ",
+    doctorTitle:"ಬೆಳೆ ವೈದ್ಯ — ಎಲೆ ರೋಗ ಪರಿಶೀಲನೆ",
+    doctorIntro:"ಬಾಧಿತ ಎಲೆಯ ಸ್ಪಷ್ಟ ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ. ಕೃಷಿ ಸಹಾಯಕ ಎಲೆಯ ಬಣ್ಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಿ ಸಂಭವನೀಯ ಸಮಸ್ಯೆ ಮತ್ತು ಚಿಕಿತ್ಸೆ ಸೂಚಿಸುತ್ತದೆ.",
+    dropTxt:"📷 ಎಲೆ ಫೋಟೋ ತೆಗೆಯಿರಿ / ಅಪ್‌ಲೋಡ್", dropSub:"ಕ್ಯಾಮೆರಾ ತೆರೆಯಲು ಅಥವಾ ಚಿತ್ರ ಆಯ್ಕೆಗೆ ಟ್ಯಾಪ್ ಮಾಡಿ", analyze:"🔬 ಎಲೆ ವಿಶ್ಲೇಷಿಸಿ",
+    detected:"ಸಂಭವನೀಯ ಸ್ಥಿತಿ", confidence:"ವಿಶ್ವಾಸ", organic:"🌿 ಸಾವಯವ ಪರಿಹಾರ", chemical:"🧪 ರಾಸಾಯನಿಕ ಪರಿಹಾರ", prevention:"🛡️ ತಡೆಗಟ್ಟುವಿಕೆ",
+    doseFor:"ನಿಮ್ಮ", orPick:"ಅಥವಾ ನೀವು ಕಾಣುವ ಲಕ್ಷಣ ಆಯ್ಕೆಮಾಡಿ:", symPrompt:"ಒಂದು ಲಕ್ಷಣ ಆಯ್ಕೆಮಾಡಿ",
+    doctorDisclaimer:"⚠️ ಬಣ್ಣ ಆಧಾರಿತ ಪ್ರಾಥಮಿಕ ಪರಿಶೀಲನೆ, ಪ್ರಯೋಗಾಲಯ ರೋಗನಿರ್ಣಯವಲ್ಲ. ರಾಸಾಯನಿಕ ಬಳಸುವ ಮೊದಲು ರೈತ ಸಂಪರ್ಕ ಕೇಂದ್ರದಲ್ಲಿ ಖಚಿತಪಡಿಸಿ.",
+    c_healthy:"ಆರೋಗ್ಯಕರ ಎಲೆ", c_blight:"ಎಲೆ ಅಂಗಮಾರಿ / ಚುಕ್ಕೆ", c_powdery:"ಬೂದಿ ರೋಗ", c_rust:"ತುಕ್ಕು ರೋಗ", c_yellowing:"ಹಳದಿ / ಪೋಷಕಾಂಶ ಕೊರತೆ",
+    helpTitle:"ರೈತ ಸಹಾಯವಾಣಿ", kcc:"ಕಿಸಾನ್ ಕಾಲ್ ಸೆಂಟರ್ (ಟೋಲ್-ಫ್ರೀ)", kisanNote:"ಕನ್ನಡದಲ್ಲಿ ಉಚಿತ ಕೃಷಿ ಸಲಹೆ, ಬೆಳಿಗ್ಗೆ 6–ರಾತ್ರಿ 10.",
+    agriDept:"ಕರ್ನಾಟಕ ಕೃಷಿ ಇಲಾಖೆ", shareApp:"📤 ಈ ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ", shareText:"ಕೃಷಿ ಸಹಾಯಕ — ಕರ್ನಾಟಕ ರೈತರಿಗೆ ಉಚಿತ ಸಹಾಯಕ:",
+    disclaimer:"ℹ️ ಕೃಷಿ ಸಹಾಯಕ ಒಂದು ಅನಧಿಕೃತ ಮಾರ್ಗದರ್ಶಿ ಸಾಧನ. ಹವಾಮಾನ ಮತ್ತು ಬೆಲೆಗಳು ಸೂಚಕ ಡೆಮೊ ದತ್ತಾಂಶ — ನಿರ್ಧಾರಗಳ ಮೊದಲು ಅಧಿಕೃತ ಮೂಲಗಳಲ್ಲಿ ಖಚಿತಪಡಿಸಿ."
+  }
+};
+let lang = localStorage.getItem('ks_lang') || 'en';
+const t = k => I18N[lang][k];
+
+const DISTRICTS = [
+  {id:"bagalkote",en:"Bagalkote",kn:"ಬಾಗಲಕೋಟೆ",taluks:["Bagalkote","Jamkhandi","Mudhol","Badami","Bilagi","Hungund","Ilkal","Rabkavi Banhatti","Guledgudda"]},
+  {id:"ballari",en:"Ballari",kn:"ಬಳ್ಳಾರಿ",taluks:["Ballari","Kurugodu","Kampli","Sanduru","Siruguppa"]},
+  {id:"belagavi",en:"Belagavi",kn:"ಬೆಳಗಾವಿ",taluks:["Belagavi","Athani","Bailhongal","Chikkodi","Gokak","Khanapur","Mudalgi","Nippani","Raybag","Savadatti","Ramdurg","Kagwad","Hukkeri","Kittur","Yaragatti"]},
+  {id:"bengaluru_urban",en:"Bengaluru Urban",kn:"ಬೆಂಗಳೂರು ನಗರ",taluks:["Bengaluru North","Bengaluru South","Bengaluru East","Anekal","Yelahanka"]},
+  {id:"bengaluru_rural",en:"Bengaluru Rural",kn:"ಬೆಂಗಳೂರು ಗ್ರಾಮಾಂತರ",taluks:["Nelamangala","Doddaballapura","Devanahalli","Hosakote"]},
+  {id:"bidar",en:"Bidar",kn:"ಬೀದರ್",taluks:["Bidar","Aurad","Basavakalyan","Bhalki","Chitgoppa","Hulsoor","Humnabad","Kamalanagar"]},
+  {id:"chamarajanagara",en:"Chamarajanagara",kn:"ಚಾಮರಾಜನಗರ",taluks:["Chamarajanagar","Gundlupet","Kollegal","Yelandur","Hanur"]},
+  {id:"chikkaballapura",en:"Chikkaballapura",kn:"ಚಿಕ್ಕಬಳ್ಳಾಪುರ",taluks:["Chikkaballapura","Bagepalli","Chintamani","Gauribidanur","Gudibanda","Shidlaghatta","Chelur","Manchenahalli"]},
+  {id:"chikkamagaluru",en:"Chikkamagaluru",kn:"ಚಿಕ್ಕಮಗಳೂರು",taluks:["Chikkamagaluru","Kadur","Koppa","Mudigere","Narasimharajapura","Sringeri","Tarikere","Ajjampura","Kalasa"]},
+  {id:"chitradurga",en:"Chitradurga",kn:"ಚಿತ್ರದುರ್ಗ",taluks:["Chitradurga","Challakere","Hiriyur","Holalkere","Hosadurga","Molakalmuru"]},
+  {id:"dakshina_kannada",en:"Dakshina Kannada",kn:"ದಕ್ಷಿಣ ಕನ್ನಡ",taluks:["Mangaluru","Bantwal","Belthangady","Puttur","Sullia","Moodabidri","Kadaba","Ullal","Mulki"]},
+  {id:"davanagere",en:"Davanagere",kn:"ದಾವಣಗೆರೆ",taluks:["Davanagere","Harihar","Channagiri","Honnali","Jagalur","Nyamati"]},
+  {id:"dharwad",en:"Dharwad",kn:"ಧಾರವಾಡ",taluks:["Dharwad","Hubballi","Kalghatgi","Kundgol","Navalgund","Alnavar","Annigeri"]},
+  {id:"gadag",en:"Gadag",kn:"ಗದಗ",taluks:["Gadag","Naragund","Ron","Shirahatti","Mundargi","Gajendragad","Lakshmeshwara"]},
+  {id:"hassan",en:"Hassan",kn:"ಹಾಸನ",taluks:["Hassan","Arsikere","Belur","Channarayapatna","Holenarasipura","Sakleshpur","Alur","Arakalgud"]},
+  {id:"haveri",en:"Haveri",kn:"ಹಾವೇರಿ",taluks:["Haveri","Byadgi","Hangal","Hirekerur","Ranebennur","Savanur","Shiggaon","Rattihalli"]},
+  {id:"kalaburagi",en:"Kalaburagi",kn:"ಕಲಬುರ್ಗಿ",taluks:["Kalaburagi","Afzalpur","Aland","Chincholi","Chittapur","Jevargi","Sedam","Kamalapur","Kalgi","Shahabad","Yedrami"]},
+  {id:"kodagu",en:"Kodagu",kn:"ಕೊಡಗು",taluks:["Madikeri","Somwarpet","Virajpet","Kushalnagar","Ponnampet"]},
+  {id:"kolar",en:"Kolar",kn:"ಕೋಲಾರ",taluks:["Kolar","Bangarapet","Malur","Mulbagal","Srinivaspur","KGF"]},
+  {id:"koppal",en:"Koppal",kn:"ಕೊಪ್ಪಳ",taluks:["Koppal","Gangavathi","Kushtagi","Yelburga","Kanakagiri","Karatagi"]},
+  {id:"mandya",en:"Mandya",kn:"ಮಂಡ್ಯ",taluks:["Mandya","Maddur","Malavalli","Krishnarajpet","Nagamangala","Pandavapura","Srirangapatna"]},
+  {id:"mysuru",en:"Mysuru",kn:"ಮೈಸೂರು",taluks:["Mysuru","Hunsur","Krishnarajanagara","Nanjangud","Piriyapatna","T. Narasipura","H.D. Kote","Saligrama","Saragur"]},
+  {id:"raichur",en:"Raichur",kn:"ರಾಯಚೂರು",taluks:["Raichur","Manvi","Devadurga","Lingasugur","Sindhanur","Maski","Sirwar"]},
+  {id:"ramanagara",en:"Ramanagara",kn:"ರಾಮನಗರ",taluks:["Ramanagara","Channapatna","Kanakapura","Magadi","Harohalli"]},
+  {id:"shivamogga",en:"Shivamogga",kn:"ಶಿವಮೊಗ್ಗ",taluks:["Shivamogga","Bhadravathi","Hosanagara","Sagar","Shikaripura","Soraba","Tirthahalli"]},
+  {id:"tumakuru",en:"Tumakuru",kn:"ತುಮಕೂರು",taluks:["Tumakuru","Kunigal","Gubbi","Tiptur","Chikkanayakanahalli","Turuvekere","Sira","Madhugiri","Koratagere","Pavagada"]},
+  {id:"udupi",en:"Udupi",kn:"ಉಡುಪಿ",taluks:["Udupi","Kundapura","Karkala","Byndoor","Kaup","Brahmavara","Hebri"]},
+  {id:"uttara_kannada",en:"Uttara Kannada",kn:"ಉತ್ತರ ಕನ್ನಡ",taluks:["Karwar","Ankola","Bhatkal","Honnavar","Kumta","Siddapur","Sirsi","Yellapur","Mundgod","Haliyal","Joida","Dandeli"]},
+  {id:"vijayapura",en:"Vijayapura",kn:"ವಿಜಯಪುರ",taluks:["Vijayapura","Indi","Sindagi","Basavana Bagevadi","Muddebihal","Talikoti","Devara Hippargi","Chadchan","Tikota","Babaleshwar","Nidagundi","Kolhar"]},
+  {id:"yadgir",en:"Yadgir",kn:"ಯಾದಗಿರಿ",taluks:["Yadgir","Shahapur","Shorapur","Gurmitkal","Hunsagi","Wadgera"]},
+  {id:"vijayanagara",en:"Vijayanagara",kn:"ವಿಜಯನಗರ",taluks:["Hosapete","Hagaribommanahalli","Harapanahalli","Hoovina Hadagali","Kottur","Kudligi"]},
+];
+
+const CROPS = [
+  {id:"ragi",en:"Ragi (Finger millet)",kn:"ರಾಗಿ",fert:{urea:45,dap:35,potash:20},basePrice:3450,diseases:["blight", "yellowing"],
+    adv:{season:{en:"June–July (Kharif)",kn:"ಜೂನ್–ಜುಲೈ (ಮುಂಗಾರು)"},water:{en:"Light irrigation; drought tolerant",kn:"ಹಗುರ ನೀರಾವರಿ; ಬರ ಸಹಿಷ್ಣು"},fert:{en:"Basal DAP; top-dress urea at 25–30 days",kn:"ತಳ ಡಿಎಪಿ; 25–30 ದಿನಗಳಲ್ಲಿ ಯೂರಿಯಾ"},harvest:{en:"110–120 days after sowing",kn:"ಬಿತ್ತನೆ ನಂತರ 110–120 ದಿನ"},tip:{en:"Line sowing beats broadcasting.",kn:"ಸಾಲು ಬಿತ್ತನೆ ಉತ್ತಮ."}}},
+  {id:"paddy",en:"Paddy (Rice)",kn:"ಭತ್ತ",fert:{urea:55,dap:40,potash:25},basePrice:2300,diseases:["blight", "yellowing"],
+    adv:{season:{en:"June–July & Nov–Dec",kn:"ಜೂನ್–ಜುಲೈ ಮತ್ತು ನವೆಂ–ಡಿಸೆಂ"},water:{en:"Keep 2–5 cm standing water",kn:"2–5 ಸೆಂ ನೀರು ಕಾಪಾಡಿ"},fert:{en:"Split urea: basal, tillering, panicle",kn:"ಯೂರಿಯಾ 3 ಕಂತು"},harvest:{en:"120–140 days",kn:"120–140 ದಿನ"},tip:{en:"Drain 10 days before harvest.",kn:"ಕಟಾವಿಗೆ 10 ದಿನ ಮೊದಲು ನೀರು ಬಿಡಿ."}}},
+  {id:"maize",en:"Maize",kn:"ಮೆಕ್ಕೆಜೋಳ",fert:{urea:60,dap:50,potash:30},basePrice:2100,diseases:["rust", "blight", "yellowing"],
+    adv:{season:{en:"June–July, Oct (Rabi)",kn:"ಜೂನ್–ಜುಲೈ, ಅಕ್ಟೋಬರ್"},water:{en:"Critical at knee-high & grain filling",kn:"ಮೊಣಕಾಲು ಎತ್ತರ ಮತ್ತು ಕಾಳು ತುಂಬುವಾಗ"},fert:{en:"Heavy N; top-dress urea twice",kn:"ಹೆಚ್ಚು ಸಾರಜನಕ; ಯೂರಿಯಾ 2 ಬಾರಿ"},harvest:{en:"90–110 days",kn:"90–110 ದಿನ"},tip:{en:"Spacing 60×20 cm.",kn:"ಅಂತರ 60×20 ಸೆಂ."}}},
+  {id:"jowar",en:"Jowar (Sorghum)",kn:"ಜೋಳ",fert:{urea:40,dap:30,potash:20},basePrice:2800,diseases:["rust", "blight"],
+    adv:{season:{en:"June–July & Sept–Oct",kn:"ಜೂನ್–ಜುಲೈ ಮತ್ತು ಸೆಪ್ಟೆಂ–ಅಕ್ಟೋ"},water:{en:"Drought hardy; 1–2 irrigations",kn:"ಬರ ಸಹಿಷ್ಣು; 1–2 ನೀರಾವರಿ"},fert:{en:"Basal DAP; urea at 30 days",kn:"ತಳ ಡಿಎಪಿ; 30 ದಿನಕ್ಕೆ ಯೂರಿಯಾ"},harvest:{en:"110–120 days",kn:"110–120 ದಿನ"},tip:{en:"Control shoot fly early.",kn:"ಚಿಗುರು ನೊಣ ಬೇಗ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"wheat",en:"Wheat",kn:"ಗೋಧಿ",fert:{urea:50,dap:40,potash:20},basePrice:2400,diseases:["rust", "yellowing"],
+    adv:{season:{en:"Nov–Dec (Rabi)",kn:"ನವೆಂ–ಡಿಸೆಂ (ಹಿಂಗಾರು)"},water:{en:"4–5 irrigations at key stages",kn:"ಪ್ರಮುಖ ಹಂತಗಳಲ್ಲಿ 4–5 ನೀರಾವರಿ"},fert:{en:"Basal DAP; urea in 2 splits",kn:"ತಳ ಡಿಎಪಿ; ಯೂರಿಯಾ 2 ಕಂತು"},harvest:{en:"120–140 days",kn:"120–140 ದಿನ"},tip:{en:"Sow by mid-Nov for best yield.",kn:"ಉತ್ತಮ ಇಳುವರಿಗೆ ನವೆಂ ಮಧ್ಯದೊಳಗೆ ಬಿತ್ತಿ."}}},
+  {id:"tur",en:"Tur / Red gram",kn:"ತೊಗರಿ",fert:{urea:20,dap:45,potash:20},basePrice:7000,diseases:["blight", "yellowing"],
+    adv:{season:{en:"June–July (Kharif)",kn:"ಜೂನ್–ಜುಲೈ (ಮುಂಗಾರು)"},water:{en:"Rain-fed; avoid waterlogging",kn:"ಮಳೆಯಾಶ್ರಿತ; ನೀರು ನಿಲ್ಲದಂತೆ"},fert:{en:"Low N, higher P at sowing",kn:"ಕಡಿಮೆ ಸಾರಜನಕ, ಹೆಚ್ಚು ರಂಜಕ"},harvest:{en:"150–180 days",kn:"150–180 ದಿನ"},tip:{en:"Pod borer is the main pest.",kn:"ಕಾಯಿಕೊರಕ ಮುಖ್ಯ ಕೀಟ."}}},
+  {id:"bengalgram",en:"Bengal gram (Chana)",kn:"ಕಡಲೆ",fert:{urea:18,dap:40,potash:20},basePrice:5200,diseases:["blight", "yellowing"],
+    adv:{season:{en:"Oct–Nov (Rabi)",kn:"ಅಕ್ಟೋ–ನವೆಂ (ಹಿಂಗಾರು)"},water:{en:"1–2 light irrigations",kn:"1–2 ಹಗುರ ನೀರಾವರಿ"},fert:{en:"Mostly P; minimal N",kn:"ಹೆಚ್ಚಾಗಿ ರಂಜಕ; ಕಡಿಮೆ ಸಾರಜನಕ"},harvest:{en:"100–110 days",kn:"100–110 ದಿನ"},tip:{en:"Avoid excess water at flowering.",kn:"ಹೂ ಬಿಡುವಾಗ ಹೆಚ್ಚು ನೀರು ಬೇಡ."}}},
+  {id:"greengram",en:"Green gram (Moong)",kn:"ಹೆಸರು",fert:{urea:15,dap:35,potash:15},basePrice:7500,diseases:["yellowing", "blight"],
+    adv:{season:{en:"June–July & post-rain",kn:"ಜೂನ್–ಜುಲೈ ಮತ್ತು ಮಳೆ ನಂತರ"},water:{en:"Low water; short duration",kn:"ಕಡಿಮೆ ನೀರು; ಅಲ್ಪಾವಧಿ"},fert:{en:"Light DAP basal only",kn:"ಕೇವಲ ಹಗುರ ಡಿಎಪಿ ತಳ"},harvest:{en:"65–70 days",kn:"65–70 ದಿನ"},tip:{en:"Watch yellow mosaic virus.",kn:"ಹಳದಿ ಮೊಸಾಯಿಕ್ ವೈರಸ್ ಗಮನಿಸಿ."}}},
+  {id:"groundnut",en:"Groundnut",kn:"ಶೇಂಗಾ",fert:{urea:25,dap:50,potash:40},basePrice:6200,diseases:["rust", "yellowing"],
+    adv:{season:{en:"June–July & Rabi",kn:"ಜೂನ್–ಜುಲೈ ಮತ್ತು ಹಿಂಗಾರು"},water:{en:"Critical at pegging & pod fill",kn:"ಪೆಗ್ಗಿಂಗ್ ಮತ್ತು ಕಾಯಿ ತುಂಬುವಾಗ"},fert:{en:"Gypsum at flowering + basal P",kn:"ಹೂ ಬಿಡುವಾಗ ಜಿಪ್ಸಂ + ತಳ ರಂಜಕ"},harvest:{en:"100–120 days",kn:"100–120 ದಿನ"},tip:{en:"Apply gypsum for better pods.",kn:"ಉತ್ತಮ ಕಾಯಿಗೆ ಜಿಪ್ಸಂ ಹಾಕಿ."}}},
+  {id:"sunflower",en:"Sunflower",kn:"ಸೂರ್ಯಕಾಂತಿ",fert:{urea:35,dap:45,potash:30},basePrice:6500,diseases:["rust", "blight"],
+    adv:{season:{en:"Kharif & Rabi",kn:"ಮುಂಗಾರು ಮತ್ತು ಹಿಂಗಾರು"},water:{en:"Critical at bud & flowering",kn:"ಮೊಗ್ಗು ಮತ್ತು ಹೂ ಹಂತದಲ್ಲಿ"},fert:{en:"Balanced NPK; boron helps",kn:"ಸಮತೋಲಿತ NPK; ಬೋರಾನ್ ಸಹಕಾರಿ"},harvest:{en:"90–100 days",kn:"90–100 ದಿನ"},tip:{en:"Hand-pollinate for filled seeds.",kn:"ತುಂಬಿದ ಬೀಜಕ್ಕೆ ಕೈ ಪರಾಗಸ್ಪರ್ಶ."}}},
+  {id:"soybean",en:"Soybean",kn:"ಸೋಯಾಬೀನ್",fert:{urea:20,dap:45,potash:30},basePrice:4200,diseases:["rust", "blight"],
+    adv:{season:{en:"June–July",kn:"ಜೂನ್–ಜುಲೈ"},water:{en:"Needs good drainage",kn:"ಉತ್ತಮ ಒಳಚರಂಡಿ ಬೇಕು"},fert:{en:"Low N (fixes own); P & K",kn:"ಕಡಿಮೆ ಸಾರಜನಕ; ರಂಜಕ ಮತ್ತು ಪೊಟ್ಯಾಶ್"},harvest:{en:"95–110 days",kn:"95–110 ದಿನ"},tip:{en:"Treat seed with rhizobium.",kn:"ಬೀಜಕ್ಕೆ ರೈಜೋಬಿಯಂ ಲೇಪಿಸಿ."}}},
+  {id:"cotton",en:"Cotton",kn:"ಹತ್ತಿ",fert:{urea:65,dap:55,potash:35},basePrice:7200,diseases:["rust", "blight", "yellowing"],
+    adv:{season:{en:"May–June",kn:"ಮೇ–ಜೂನ್"},water:{en:"Critical at flowering & boll",kn:"ಹೂ ಮತ್ತು ಕಾಯಿ ಹಂತದಲ್ಲಿ"},fert:{en:"Split N & K; micronutrients",kn:"ಸಾರಜನಕ ಮತ್ತು ಪೊಟ್ಯಾಶ್ ವಿಂಗಡಿಸಿ"},harvest:{en:"150–180 days",kn:"150–180 ದಿನ"},tip:{en:"Monitor pink bollworm.",kn:"ಗುಲಾಬಿ ಕಾಯಿಕೊರಕ ಗಮನಿಸಿ."}}},
+  {id:"sugarcane",en:"Sugarcane",kn:"ಕಬ್ಬು",fert:{urea:100,dap:70,potash:50},basePrice:340,diseases:["rust", "yellowing"],
+    adv:{season:{en:"Dec–Feb & June–July",kn:"ಡಿಸೆಂ–ಫೆಬ್ರ ಮತ್ತು ಜೂನ್–ಜುಲೈ"},water:{en:"Frequent; high water need",kn:"ಆಗಾಗ; ಹೆಚ್ಚು ನೀರು"},fert:{en:"Heavy feeder; N in 3–4 splits",kn:"ಹೆಚ್ಚು ಗೊಬ್ಬರ; ಸಾರಜನಕ 3–4 ಕಂತು"},harvest:{en:"11–12 months",kn:"11–12  ತಿಂಗಳು"},tip:{en:"Earthing-up boosts yield.",kn:"ಮಣ್ಣು ಏರಿಸಿ ಇಳುವರಿ ಹೆಚ್ಚಿಸಿ."}}},
+  {id:"tobacco",en:"Tobacco",kn:"ತಂಬಾಕು",fert:{urea:40,dap:35,potash:60},basePrice:12000,diseases:["blight", "yellowing"],
+    adv:{season:{en:"Aug–Sept",kn:"ಆಗಸ್ಟ್–ಸೆಪ್ಟೆಂ"},water:{en:"Moderate; avoid excess",kn:"ಮಧ್ಯಮ; ಹೆಚ್ಚು ಬೇಡ"},fert:{en:"High K; controlled N",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ನಿಯಂತ್ರಿತ ಸಾರಜನಕ"},harvest:{en:"120–150 days",kn:"120–150 ದಿನ"},tip:{en:"Top & de-sucker for leaf quality.",kn:"ಎಲೆ ಗುಣಮಟ್ಟಕ್ಕೆ ಟಾಪಿಂಗ್ ಮಾಡಿ."}}},
+  {id:"arecanut",en:"Arecanut",kn:"ಅಡಿಕೆ",fert:{urea:40,dap:30,potash:60},basePrice:48000,diseases:["blight", "yellowing"],
+    adv:{season:{en:"Plant June–Aug",kn:"ಜೂನ್–ಆಗಸ್ಟ್ ನೆಡಿ"},water:{en:"Regular; drought sensitive",kn:"ನಿಯಮಿತ; ಬರಕ್ಕೆ ಸೂಕ್ಷ್ಮ"},fert:{en:"High K; 2 splits/year",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ವರ್ಷಕ್ಕೆ 2 ಕಂತು"},harvest:{en:"Harvest Aug–Dec",kn:"ಕೊಯ್ಲು ಆಗಸ್ಟ್–ಡಿಸೆಂ"},tip:{en:"Spray Bordeaux for koleroga.",kn:"ಕೊಳೆರೋಗಕ್ಕೆ ಬೋರ್ಡೊ ಸಿಂಪಡಿಸಿ."}}},
+  {id:"coconut",en:"Coconut",kn:"ತೆಂಗು",fert:{urea:30,dap:25,potash:80},basePrice:12000,diseases:["yellowing", "blight"],
+    adv:{season:{en:"Plant June–Sept",kn:"ಜೂನ್–ಸೆಪ್ಟೆಂ ನೆಡಿ"},water:{en:"Regular; drip ideal",kn:"ನಿಯಮಿತ; ಡ್ರಿಪ್ ಉತ್ತಮ"},fert:{en:"High K; organic manure",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ಸಾವಯವ ಗೊಬ್ಬರ"},harvest:{en:"Yields year-round",kn:"ವರ್ಷಪೂರ್ತಿ ಇಳುವರಿ"},tip:{en:"Manage root wilt & mite.",kn:"ಬೇರು ಸೊರಗು ಮತ್ತು ನುಸಿ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"coffee",en:"Coffee",kn:"ಕಾಫಿ",fert:{urea:30,dap:25,potash:40},basePrice:20000,diseases:["rust", "blight"],
+    adv:{season:{en:"Plant June–July",kn:"ಜೂನ್–ಜುಲೈ ನೆಡಿ"},water:{en:"Shade + irrigation for blossom",kn:"ನೆರಳು + ಹೂ ಬಿಡಲು ನೀರಾವರಿ"},fert:{en:"Split NPK 3 times/year",kn:"ವರ್ಷಕ್ಕೆ 3 ಬಾರಿ NPK"},harvest:{en:"Pick Nov–Feb",kn:"ಕೊಯ್ಲು ನವೆಂ–ಫೆಬ್ರ"},tip:{en:"Control leaf rust early.",kn:"ಎಲೆ ತುಕ್ಕು ಬೇಗ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"tomato",en:"Tomato",kn:"ಟೊಮೇಟೊ",fert:{urea:50,dap:60,potash:50},basePrice:1800,diseases:["blight", "powdery", "yellowing"],
+    adv:{season:{en:"Year-round with irrigation",kn:"ನೀರಾವರಿಯೊಂದಿಗೆ ವರ್ಷಪೂರ್ತಿ"},water:{en:"Drip; avoid wetting leaves",kn:"ಡ್ರಿಪ್; ಎಲೆ ಒದ್ದೆ ಬೇಡ"},fert:{en:"High P & K; weekly fertigation",kn:"ಹೆಚ್ಚು ರಂಜಕ ಮತ್ತು ಪೊಟ್ಯಾಶ್"},harvest:{en:"70–90 days; many pickings",kn:"70–90 ದಿನ; ಹಲವು ಕೊಯ್ಲು"},tip:{en:"Stake plants; watch blight.",kn:"ಆಧಾರ ಕೊಡಿ; ಬ್ಲೈಟ್ ಗಮನಿಸಿ."}}},
+  {id:"onion",en:"Onion",kn:"ಈರುಳ್ಳಿ",fert:{urea:45,dap:50,potash:40},basePrice:1500,diseases:["blight", "powdery", "yellowing"],
+    adv:{season:{en:"Kharif (June) & Rabi",kn:"ಮುಂಗಾರು (ಜೂನ್) ಮತ್ತು ಹಿಂಗಾರು"},water:{en:"Stop water 10–15 days before harvest",kn:"ಕಟಾವಿಗೆ 10–15 ದಿನ ಮೊದಲು ನೀರು ನಿಲ್ಲಿಸಿ"},fert:{en:"Avoid excess N (delays bulbing)",kn:"ಹೆಚ್ಚು ಸಾರಜನಕ ಬೇಡ"},harvest:{en:"100–120 days",kn:"100–120 ದಿನ"},tip:{en:"Cure bulbs in shade.",kn:"ನೆರಳಲ್ಲಿ ಒಣಗಿಸಿ."}}},
+  {id:"potato",en:"Potato",kn:"ಆಲೂಗಡ್ಡೆ",fert:{urea:55,dap:55,potash:60},basePrice:1600,diseases:["blight", "yellowing"],
+    adv:{season:{en:"Kharif & Rabi",kn:"ಮುಂಗಾರು ಮತ್ತು ಹಿಂಗಾರು"},water:{en:"Frequent light irrigation",kn:"ಆಗಾಗ ಹಗುರ ನೀರಾವರಿ"},fert:{en:"High K; earthing-up",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ಮಣ್ಣು ಏರಿಸಿ"},harvest:{en:"90–110 days",kn:"90–110 ದಿನ"},tip:{en:"Late blight is the main threat.",kn:"ಲೇಟ್ ಬ್ಲೈಟ್ ಮುಖ್ಯ ಅಪಾಯ."}}},
+  {id:"chilli",en:"Chilli",kn:"ಮೆಣಸಿನಕಾಯಿ",fert:{urea:45,dap:50,potash:50},basePrice:9000,diseases:["powdery", "blight", "yellowing"],
+    adv:{season:{en:"June–July",kn:"ಜೂನ್–ಜುಲೈ"},water:{en:"Moderate; avoid water stress",kn:"ಮಧ್ಯಮ; ನೀರಿನ ಒತ್ತಡ ಬೇಡ"},fert:{en:"Split N & K; calcium",kn:"ಸಾರಜನಕ ಮತ್ತು ಪೊಟ್ಯಾಶ್; ಕ್ಯಾಲ್ಸಿಯಂ"},harvest:{en:"Pick from 90 days",kn:"90 ದಿನದಿಂದ ಕೊಯ್ಲು"},tip:{en:"Control thrips & leaf curl.",kn:"ಥ್ರಿಪ್ಸ್ ಮತ್ತು ಎಲೆ ಮುದುರುವಿಕೆ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"banana",en:"Banana",kn:"ಬಾಳೆ",fert:{urea:110,dap:60,potash:150},basePrice:1900,diseases:["yellowing", "blight"],
+    adv:{season:{en:"Plant year-round",kn:"ವರ್ಷಪೂರ್ತಿ ನೆಡಬಹುದು"},water:{en:"Regular; drip ideal",kn:"ನಿಯಮಿತ; ಡ್ರಿಪ್ ಉತ್ತಮ"},fert:{en:"Very high K; monthly feeding",kn:"ಬಹಳ ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ಮಾಸಿಕ"},harvest:{en:"11–12 months",kn:"11–12  ತಿಂಗಳು"},tip:{en:"Prop bunches; manage sigatoka.",kn:"ಗೊನೆಗೆ ಆಧಾರ; ಸಿಗಟೋಕಾ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"mango",en:"Mango",kn:"ಮಾವು",fert:{urea:30,dap:25,potash:40},basePrice:4000,diseases:["powdery", "blight"],
+    adv:{season:{en:"Plant June–Aug",kn:"ಜೂನ್–ಆಗಸ್ಟ್ ನೆಡಿ"},water:{en:"Irrigate at fruit set",kn:"ಕಾಯಿ ಕಟ್ಟುವಾಗ ನೀರಾವರಿ"},fert:{en:"Balanced NPK once/year",kn:"ವರ್ಷಕ್ಕೊಮ್ಮೆ ಸಮತೋಲಿತ NPK"},harvest:{en:"Harvest Apr–June",kn:"ಕೊಯ್ಲು ಏಪ್ರಿಲ್–ಜೂನ್"},tip:{en:"Spray for powdery mildew at flowering.",kn:"ಹೂ ಬಿಡುವಾಗ ಬೂದಿ ರೋಗಕ್ಕೆ ಸಿಂಪಡಿಸಿ."}}},
+  {id:"grapes",en:"Grapes",kn:"ದ್ರಾಕ್ಷಿ",fert:{urea:60,dap:50,potash:120},basePrice:5000,diseases:["powdery", "blight"],
+    adv:{season:{en:"Prune Apr & Oct",kn:"ಏಪ್ರಿಲ್ ಮತ್ತು ಅಕ್ಟೋಬರ್ ಸವರುವಿಕೆ"},water:{en:"Drip; controlled at ripening",kn:"ಡ್ರಿಪ್; ಹಣ್ಣಾಗುವಾಗ ನಿಯಂತ್ರಿತ"},fert:{en:"High K; micronutrients",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ಸೂಕ್ಷ್ಮಪೋಷಕ"},harvest:{en:"~4 months after pruning",kn:"ಸವರಿದ ~4 ತಿಂಗಳ ನಂತರ"},tip:{en:"Downy & powdery mildew are key.",kn:"ಡೌನಿ ಮತ್ತು ಬೂದಿ ರೋಗ ಮುಖ್ಯ."}}},
+  {id:"pomegranate",en:"Pomegranate",kn:"ದಾಳಿಂಬೆ",fert:{urea:40,dap:45,potash:60},basePrice:8000,diseases:["blight", "powdery"],
+    adv:{season:{en:"Plant June–Aug",kn:"ಜೂನ್–ಆಗಸ್ಟ್ ನೆಡಿ"},water:{en:"Drip; regulate for bahar",kn:"ಡ್ರಿಪ್; ಬಹಾರ್‌ಗೆ ನಿಯಂತ್ರಿಸಿ"},fert:{en:"High K; split doses",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ವಿಂಗಡಿತ"},harvest:{en:"~5–6 months after flowering",kn:"ಹೂ ನಂತರ ~5–6 ತಿಂಗಳು"},tip:{en:"Manage bacterial blight strictly.",kn:"ಬ್ಯಾಕ್ಟೀರಿಯಲ್ ಬ್ಲೈಟ್ ಕಟ್ಟುನಿಟ್ಟಾಗಿ ನಿಯಂತ್ರಿಸಿ."}}},
+  {id:"turmeric",en:"Turmeric",kn:"ಅರಿಶಿನ",fert:{urea:50,dap:40,potash:60},basePrice:8500,diseases:["blight", "yellowing"],
+    adv:{season:{en:"May–June",kn:"ಮೇ–ಜೂನ್"},water:{en:"Regular; needs shade",kn:"ನಿಯಮಿತ; ನೆರಳು ಬೇಕು"},fert:{en:"High K; organic mulch",kn:"ಹೆಚ್ಚು ಪೊಟ್ಯಾಶ್; ಸಾವಯವ ಮಲ್ಚ್"},harvest:{en:"7–9 months",kn:"7–9  ತಿಂಗಳು"},tip:{en:"Mulch to conserve moisture.",kn:"ತೇವ ಕಾಪಾಡಲು ಮಲ್ಚ್ ಮಾಡಿ."}}},
+  {id:"ginger",en:"Ginger",kn:"ಶುಂಠಿ",fert:{urea:45,dap:40,potash:55},basePrice:11000,diseases:["blight", "yellowing"],
+    adv:{season:{en:"Apr–May",kn:"ಏಪ್ರಿಲ್–ಮೇ"},water:{en:"Regular; good drainage vital",kn:"ನಿಯಮಿತ; ಒಳಚರಂಡಿ ಅಗತ್ಯ"},fert:{en:"Split N & K; mulch",kn:"ಸಾರಜನಕ ಮತ್ತು ಪೊಟ್ಯಾಶ್; ಮಲ್ಚ್"},harvest:{en:"8–9 months",kn:"8–9  ತಿಂಗಳು"},tip:{en:"Rhizome rot spreads in wet soil.",kn:"ಒದ್ದೆ ಮಣ್ಣಲ್ಲಿ ಗಡ್ಡೆ ಕೊಳೆ ಹರಡುತ್ತದೆ."}}},
+];
+
+
+const CONDITIONS = {
+  healthy:{ key:"c_healthy", sev:"ok", organic:{en:"No action needed. Keep monitoring weekly and maintain balanced nutrition.",kn:"ಯಾವುದೇ ಕ್ರಮ ಬೇಡ. ವಾರಕ್ಕೊಮ್ಮೆ ಗಮನಿಸಿ, ಸಮತೋಲಿತ ಪೋಷಣೆ ಕಾಪಾಡಿ."}, chemical:{en:"None required.",kn:"ಅಗತ್ಯವಿಲ್ಲ."}, dose:null, prevention:{en:"Rotate crops, use certified seed, keep field weed-free.",kn:"ಬೆಳೆ ಸರದಿ, ಪ್ರಮಾಣೀಕೃತ ಬೀಜ, ಕಳೆ ಮುಕ್ತ ಜಮೀನು."} },
+  blight:{ key:"c_blight", sev:"bad", organic:{en:"Spray neem oil 5 ml/L or Trichoderma; remove & burn infected leaves.",kn:"ಬೇವಿನ ಎಣ್ಣೆ 5 ಮಿಲಿ/ಲೀ ಅಥವಾ ಟ್ರೈಕೋಡರ್ಮಾ; ಬಾಧಿತ ಎಲೆ ತೆಗೆದು ಸುಡಿ."}, chemical:{en:"Mancozeb 75% WP (contact fungicide).",kn:"ಮ್ಯಾಂಕೋಜೆಬ್ 75% WP."}, dose:{qty:600, unit:{en:"g / acre",kn:"ಗ್ರಾಂ / ಎಕರೆ"}}, prevention:{en:"Avoid overhead watering; ensure spacing & drainage.",kn:"ಮೇಲಿನಿಂದ ನೀರು ಬೇಡ; ಅಂತರ ಮತ್ತು ಒಳಚರಂಡಿ."} },
+  powdery:{ key:"c_powdery", sev:"warn", organic:{en:"Spray potassium bicarbonate or diluted milk; improve air flow.",kn:"ಪೊಟ್ಯಾಸಿಯಂ ಬೈಕಾರ್ಬೊನೇಟ್ ಅಥವಾ ತೆಳು ಹಾಲು; ಗಾಳಿ ಸಂಚಾರ ಸುಧಾರಿಸಿ."}, chemical:{en:"Wettable sulphur 80% WP.",kn:"ವೆಟ್ಟಬಲ್ ಸಲ್ಫರ್ 80% WP."}, dose:{qty:800, unit:{en:"g / acre",kn:"ಗ್ರಾಂ / ಎಕರೆ"}}, prevention:{en:"Avoid excess nitrogen; ensure sunlight; thin crowded shoots.",kn:"ಹೆಚ್ಚು ಸಾರಜನಕ ಬೇಡ; ಸೂರ್ಯಪ್ರಕಾಶ; ದಟ್ಟ ಚಿಗುರು ತೆಗೆಯಿರಿ."} },
+  rust:{ key:"c_rust", sev:"bad", organic:{en:"Spray neem or garlic extract; remove severely rusted leaves early.",kn:"ಬೇವು ಅಥವಾ ಬೆಳ್ಳುಳ್ಳಿ ಸಾರ; ತೀವ್ರ ತುಕ್ಕು ಎಲೆ ಬೇಗ ತೆಗೆಯಿರಿ."}, chemical:{en:"Propiconazole 25% EC (systemic).",kn:"ಪ್ರೊಪಿಕೊನಜೋಲ್ 25% EC."}, dose:{qty:200, unit:{en:"ml / acre",kn:"ಮಿಲಿ / ಎಕರೆ"}}, prevention:{en:"Grow resistant varieties; avoid dense planting.",kn:"ನಿರೋಧಕ ತಳಿ; ದಟ್ಟ ನಾಟಿ ಬೇಡ."} },
+  yellowing:{ key:"c_yellowing", sev:"warn", organic:{en:"Apply well-rotted compost/FYM; spray 2% panchagavya.",kn:"ಚೆನ್ನಾಗಿ ಕೊಳೆತ ಕಾಂಪೋಸ್ಟ್; 2% ಪಂಚಗವ್ಯ ಸಿಂಪಡಿಸಿ."}, chemical:{en:"Foliar Urea 2% or micronutrient mix.",kn:"ಯೂರಿಯಾ 2% ಅಥವಾ ಸೂಕ್ಷ್ಮಪೋಷಕ ಎಲೆ ಸಿಂಪಡಣೆ."}, dose:{qty:10, unit:{en:"g urea / L water",kn:"ಗ್ರಾಂ ಯೂರಿಯಾ / ಲೀ ನೀರು"}}, prevention:{en:"Get a soil health card; correct N/Fe/Zn; ensure drainage.",kn:"ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್; N/Fe/Zn ಸರಿಪಡಿಸಿ; ಒಳಚರಂಡಿ."} }
+};
+const SCHEMES = [
+  { id:"pmkisan", name:{en:"PM-KISAN Samman Nidhi",kn:"ಪಿಎಂ-ಕಿಸಾನ್ ಸಮ್ಮಾನ್ ನಿಧಿ"}, dept:{en:"Govt of India",kn:"ಭಾರತ ಸರ್ಕಾರ"}, amount:{en:"₹6,000 / year",kn:"₹6,000 / ವರ್ಷ"}, url:"https://pmkisan.gov.in/", desc:{en:"Income support to landholding farmer families, paid to bank.",kn:"ಭೂ ಹೊಂದಿರುವ ರೈತ ಕುಟುಂಬಗಳಿಗೆ ಆದಾಯ ಬೆಂಬಲ."} },
+  { id:"raitha", name:{en:"Raitha Vidya Nidhi Scholarship",kn:"ರೈತ ವಿದ್ಯಾ ನಿಧಿ ವಿದ್ಯಾರ್ಥಿವೇತನ"}, dept:{en:"Karnataka Agri Dept",kn:"ಕರ್ನಾಟಕ ಕೃಷಿ ಇಲಾಖೆ"}, amount:{en:"₹2,000–₹11,000 / year",kn:"₹2,000–₹11,000 / ವರ್ಷ"}, url:"https://raithamitra.karnataka.gov.in/", desc:{en:"Scholarships for farmers' children in higher studies.",kn:"ಉನ್ನತ ವ್ಯಾಸಂಗದ ರೈತ ಮಕ್ಕಳಿಗೆ ವಿದ್ಯಾರ್ಥಿವೇತನ."} },
+  { id:"fasal", name:{en:"PM Fasal Bima (Crop Insurance)",kn:"ಪಿಎಂ ಫಸಲ್ ಬಿಮಾ (ಬೆಳೆ ವಿಮೆ)"}, dept:{en:"Govt of India",kn:"ಭಾರತ ಸರ್ಕಾರ"}, amount:{en:"Low premium; full cover on loss",kn:"ಕಡಿಮೆ ಪ್ರೀಮಿಯಂ; ನಷ್ಟಕ್ಕೆ ಪೂರ್ಣ ವಿಮೆ"}, url:"https://pmfby.gov.in/", desc:{en:"Insurance vs drought, flood, pests & disease.",kn:"ಬರ, ಪ್ರವಾಹ, ಕೀಟ ಮತ್ತು ರೋಗಕ್ಕೆ ವಿಮೆ."} },
+  { id:"kisancc", name:{en:"Kisan Credit Card (KCC)",kn:"ಕಿಸಾನ್ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್"}, dept:{en:"Banks / NABARD",kn:"ಬ್ಯಾಂಕ್ / ನಬಾರ್ಡ್"}, amount:{en:"Crop loans at 4%",kn:"4% ಬಡ್ಡಿಗೆ ಬೆಳೆ ಸಾಲ"}, url:"https://www.nabard.org/", desc:{en:"Short-term credit at subsidised interest.",kn:"ಕಡಿಮೆ ಬಡ್ಡಿಯಲ್ಲಿ ಅಲ್ಪಾವಧಿ ಸಾಲ."} },
+  { id:"gangakalyan", name:{en:"Ganga Kalyana (Irrigation)",kn:"ಗಂಗಾ ಕಲ್ಯಾಣ (ನೀರಾವರಿ)"}, dept:{en:"Karnataka",kn:"ಕರ್ನಾಟಕ"}, amount:{en:"Borewell + pump subsidy",kn:"ಕೊಳವೆಬಾವಿ + ಪಂಪ್ ಸಬ್ಸಿಡಿ"}, url:"https://raithamitra.karnataka.gov.in/", desc:{en:"Irrigation support for SC/ST & small farmers.",kn:"ಎಸ್‌ಸಿ/ಎಸ್‌ಟಿ ಮತ್ತು ಸಣ್ಣ ರೈತರಿಗೆ ನೀರಾವರಿ."} },
+  { id:"soilhealth", name:{en:"Soil Health Card",kn:"ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್"}, dept:{en:"Govt of India",kn:"ಭಾರತ ಸರ್ಕಾರ"}, amount:{en:"Free soil testing",kn:"ಉಚಿತ ಮಣ್ಣಿನ ಪರೀಕ್ಷೆ"}, url:"https://soilhealth.dac.gov.in/", desc:{en:"Free nutrient analysis + fertilizer advice.",kn:"ಉಚಿತ ಪೋಷಕಾಂಶ ವಿಶ್ಲೇಷಣೆ + ಗೊಬ್ಬರ ಸಲಹೆ."} }
+];
+function seeded(str){ let h=0; for(let i=0;i<str.length;i++){h=(h*31+str.charCodeAt(i))>>>0;} return ()=>{ h=(h*1103515245+12345)>>>0; return h/4294967296; }; }
+function opt(v,label){ return `<option value="${v}">${label}</option>`; }
+function currentDistrict(){ return DISTRICTS.find(d=>d.id===document.getElementById('district').value); }
+function fillDistricts(){ const el=document.getElementById('district'); const cur=el.value; el.innerHTML=DISTRICTS.map(d=>opt(d.id,d[lang])).join(''); if(cur) el.value=cur; }
+function fillTaluks(){ const d=currentDistrict(); const el=document.getElementById('taluk'); const cur=el.value; el.innerHTML=(d?d.taluks:[]).map(x=>opt(x,x)).join(''); if(cur && d && d.taluks.includes(cur)) el.value=cur; }
+function fillCrop(){ const el=document.getElementById('crop'); const cur=el.value; el.innerHTML=CROPS.map(c=>opt(c.id,c[lang])).join(''); if(cur) el.value=cur; }
+function renderStatic(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  document.getElementById('goBtn').textContent=t('go');
+  document.getElementById('disclaimer').textContent=t('disclaimer');
+  document.getElementById('langBtn').textContent="🌐 "+t('langLabel');
+  document.getElementById('hobli').placeholder=lang==='kn'?"ಹೋಬಳಿ ಹೆಸರು":"Hobli name";
+  document.getElementById('village').placeholder=lang==='kn'?"ಗ್ರಾಮ ಹೆಸರು":"Village name";
+  document.querySelectorAll('#irrigation option').forEach(o=>{ o.textContent=t(o.dataset.i18nOpt); });
+  fillDistricts(); fillTaluks(); fillCrop();
+}
+function readFarm(){ return { district:document.getElementById('district').value, crop:document.getElementById('crop').value, land:Math.max(0,Number(document.getElementById('land').value)||0), irrigation:document.getElementById('irrigation').value }; }
+function saveProfile(){ localStorage.setItem('ks_profile', JSON.stringify({ ...readFarm(), taluk:document.getElementById('taluk').value, hobli:document.getElementById('hobli').value, village:document.getElementById('village').value })); }
+function weatherData(f){ const rnd=seeded(f.district+"|"+new Date().toDateString());
+  const temp=Math.round(22+rnd()*12), hum=Math.round(45+rnd()*45), wind=Math.round(4+rnd()*18), rain=Math.round(rnd()*100);
+  const conds=[["☀️",{en:"Clear",kn:"ಶುಭ್ರ"}],["⛅",{en:"Partly cloudy",kn:"ಭಾಗಶಃ ಮೋಡ"}],["☁️",{en:"Cloudy",kn:"ಮೋಡ"}],["🌦️",{en:"Light showers",kn:"ಹಗುರ ಮಳೆ"}],["🌧️",{en:"Rain",kn:"ಮಳೆ"}]];
+  const ci=rain>70?4:rain>50?3:rain>30?1:0;
+  const days=lang==='kn'?["ಇಂದು","ನಾಳೆ","ಬುಧ","ಗುರು","ಶುಕ್ರ"]:["Today","Tomorrow","Wed","Thu","Fri"];
+  const fc=days.map(d=>{ const r=Math.round(rnd()*100); const c=r>70?"🌧️":r>45?"🌦️":r>25?"⛅":"☀️"; return {d,c,t:Math.round(22+rnd()*12)}; });
+  return {temp,hum,wind,rain,cond:conds[ci],fc,willRain:rain>50};
+}
+function panelWeather(f){ const w=weatherData(f); const d=currentDistrict(); const dName=d?d[lang]:'';
+  return `<div class="card weather"><div style="font-size:.9rem;opacity:.95;font-weight:600">📍 ${dName}</div>
+    <div class="big">${w.cond[0]}</div><div class="temp">${w.temp}°C</div><div class="cond">${w.cond[1][lang]}</div>
+    <div class="wgrid"><div class="wcell"><div class="v">${w.hum}%</div><div class="l">${t('humidity')}</div></div>
+      <div class="wcell"><div class="v">${w.wind} km/h</div><div class="l">${t('wind')}</div></div>
+      <div class="wcell"><div class="v">${w.rain}%</div><div class="l">${t('rainChance')}</div></div></div>
+    <div style="text-align:left;font-size:.8rem;font-weight:700;margin-top:18px;opacity:.95">${t('forecast5')}</div>
+    <div class="forecast">${w.fc.map(d=>`<div class="fday"><div class="d">${d.d}</div><div class="i">${d.c}</div><div class="t">${d.t}°</div></div>`).join('')}</div>
+    <div class="rain-alert">${w.willRain?t('rainYes'):t('rainNo')}</div></div>`;
+}
+function panelMarket(f){ const crop=CROPS.find(c=>c.id===f.crop); const rnd=seeded(crop.id+"|mkt|"+new Date().toDateString());
+  const markets=[{en:"Bengaluru APMC",kn:"ಬೆಂಗಳೂರು APMC",fac:1.08},{en:"Mysuru APMC",kn:"ಮೈಸೂರು APMC",fac:1.02},{en:"Hubballi APMC",kn:"ಹುಬ್ಬಳ್ಳಿ APMC",fac:0.97},{en:"Kalaburagi APMC",kn:"ಕಲಬುರಗಿ APMC",fac:0.94}];
+  const rows=markets.map(m=>{ const price=Math.round(crop.basePrice*m.fac*(0.95+rnd()*0.1)); const change=Math.round((rnd()*8-4)*10)/10; return {m,price,change}; });
+  const best=rows.reduce((a,b)=>b.price>a.price?b:a);
+  const html=rows.sort((a,b)=>b.price-a.price).map(r=>{ const up=r.change>=0; const isBest=r===best;
+    return `<div class="mkt ${isBest?'best':''}"><div><div class="name">${r.m[lang]}${isBest?`<span class="best-badge">${t('bestSell')}</span>`:''}</div><div class="sub">${crop[lang]}</div></div>
+      <div><div class="price">₹${r.price.toLocaleString('en-IN')}<span style="font-size:.7rem;color:var(--muted)">${t('perQuintal')}</span></div><div class="trend ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(r.change)}%</div></div></div>`; }).join('');
+  return `<div class="card"><h2>💰 ${crop[lang]}</h2>${html}<p class="muted" style="margin-top:14px">${t('marketNote')}</p></div>`;
+}
+function advisoryText(f){ const c=CROPS.find(x=>x.id===f.crop); const a=c.adv; return `${c[lang]}. ${t('advSeason')}: ${a.season[lang]}. ${t('advWater')}: ${a.water[lang]}. ${t('advFert')}: ${a.fert[lang]}. ${t('advHarvest')}: ${a.harvest[lang]}. ${t('advTip')}: ${a.tip[lang]}.`; }
+function panelAdvisory(f){ const c=CROPS.find(x=>x.id===f.crop); const a=c.adv;
+  const rows=[["📅",t('advSeason'),a.season[lang]],["💧",t('advWater'),a.water[lang]],["🌿",t('advFert'),a.fert[lang]],["🌾",t('advHarvest'),a.harvest[lang]],["💡",t('advTip'),a.tip[lang]]]
+    .map(([i,h,b])=>`<div class="adv-row"><div class="adv-ico">${i}</div><div><div class="h">${h}</div><div class="b">${b}</div></div></div>`).join('');
+  return `<div class="card"><h2>🌱 ${c[lang]}</h2>${rows}<button class="speak" onclick="speak(advisoryText(readFarm()))">${t('listen')}</button></div>`;
+}
+function panelFertilizer(f){ const c=CROPS.find(x=>x.id===f.crop); const factor=f.irrigation==='rainfed'?0.85:1; const land=f.land||1;
+  const urea=Math.round(c.fert.urea*land*factor), dap=Math.round(c.fert.dap*land*factor), potash=Math.round(c.fert.potash*land*factor);
+  return `<div class="card"><h2>🧮 ${t('fertTitle')}</h2><div class="muted" style="margin-bottom:6px">${t('fertFor')} <strong style="color:var(--text)">${c[lang]}</strong> · ${land} ${t('acres')} · ${t(f.irrigation)}</div>
+    <div class="fert-out"><div class="fcell"><div class="v">${urea}</div><div class="l">${t('urea')} (${t('kg')})</div></div>
+      <div class="fcell"><div class="v">${dap}</div><div class="l">${t('dap')} (${t('kg')})</div></div>
+      <div class="fcell"><div class="v">${potash}</div><div class="l">${t('potash')} (${t('kg')})</div></div></div><p class="fnote">${t('fertNote')}</p></div>`;
+}
+function panelSchemes(){ const cards=SCHEMES.map(s=>`<div class="card scheme"><div class="name">${s.name[lang]}</div><div class="dept">${s.dept[lang]}</div><div class="amt">${s.amount[lang]}</div><div class="desc">${s.desc[lang]}</div><a class="apply" href="${s.url}" target="_blank" rel="noopener">${lang==='kn'?'ಅರ್ಜಿ ಸಲ್ಲಿಸಿ →':'Apply →'}</a></div>`).join('');
+  return `<div class="muted" style="text-align:center;margin-bottom:12px">${t('schemesNote')}</div>${cards}`; }
+function panelHelp(){ return `<div class="card"><h2>📞 ${t('helpTitle')}</h2>
+  <div class="helpline"><div style="font-size:1.8rem">☎️</div><div><div style="font-weight:700">${t('kcc')}</div><a href="tel:18001801551" class="n">1800-180-1551</a><div class="muted">${t('kisanNote')}</div></div></div>
+  <div style="height:12px"></div>
+  <div class="helpline"><div style="font-size:1.8rem">🏛️</div><div><div style="font-weight:700">${t('agriDept')}</div><a href="https://raithamitra.karnataka.gov.in/" target="_blank" rel="noopener" class="n" style="font-size:.95rem">raithamitra.karnataka.gov.in</a></div></div>
+  <button class="btn" style="margin-top:16px" onclick="shareApp()">${t('shareApp')}</button></div>`; }
+let lastImage=null;
+function panelDoctor(){ const syms=[["blight",t('c_blight')],["powdery",t('c_powdery')],["rust",t('c_rust')],["yellowing",t('c_yellowing')],["healthy",t('c_healthy')]];
+  return `<div class="card"><h2>🩺 ${t('doctorTitle')}</h2><p class="muted">${t('doctorIntro')}</p>
+    <div class="drop" id="drop"><div class="ico">📷</div><div class="txt">${t('dropTxt')}</div><div class="sub">${t('dropSub')}</div></div>
+    <input type="file" id="leafInput" accept="image/*" capture="environment" class="hidden">
+    <img id="leafPreview" class="preview hidden" alt="leaf">
+    <button class="btn hidden" id="analyzeBtn" style="margin-top:12px">${t('analyze')}</button>
+    <div id="diagResult"></div>
+    <div style="margin-top:18px"><label>${t('orPick')}</label><select id="symptomPick"><option value="">${t('symPrompt')}</option>${syms.map(s=>opt(s[0],s[1])).join('')}</select></div>
+    <p class="muted" style="margin-top:14px">${t('doctorDisclaimer')}</p></div>
+    <div id="canvasHolder" class="hidden"><canvas id="cv"></canvas></div>`;
+}
+function classifyPixel(r,g,b){ const mx=Math.max(r,g,b), mn=Math.min(r,g,b);
+  if(mx<55) return 'dark';
+  if(mx>200 && (mx-mn)<26) return 'white';
+  if(r>120 && g>110 && b<g-28 && Math.abs(r-g)<55) return 'yellow';
+  if(g>=r && g>=b && (g-b)>18) return 'green';
+  if(mx>170 && r>g && g>b && (r-g)>30 && (g-b)>8) return 'orange';
+  if(r>=g && g>=b && mx<175) return 'brown';
+  return 'other';
+}
+function analyzeLeaf(){ if(!lastImage) return; const cv=document.getElementById('cv'); const W=140,H=140; cv.width=W; cv.height=H;
+  const ctx=cv.getContext('2d'); ctx.drawImage(lastImage,0,0,W,H); const data=ctx.getImageData(0,0,W,H).data;
+  const cnt={green:0,yellow:0,brown:0,orange:0,white:0,dark:0,other:0}; let total=0;
+  for(let i=0;i<data.length;i+=4*3){ if(data[i+3]<10) continue; cnt[classifyPixel(data[i],data[i+1],data[i+2])]++; total++; }
+  if(!total) return; const pct=k=>cnt[k]/total; const green=pct('green');
+  const abn={ blight:pct('brown')+pct('dark'), powdery:pct('white'), rust:pct('orange'), yellowing:pct('yellow') };
+  let best='healthy',bestVal=0; for(const k in abn){ if(abn[k]>bestVal){ bestVal=abn[k]; best=k; } }
+  let condId,conf; if(green>0.72 && bestVal<0.14){ condId='healthy'; conf=Math.min(0.95,green); } else { condId=best; conf=Math.min(0.95,0.35+bestVal*1.6); }
+  renderDiagnosis(condId,conf);
+}
+function renderDiagnosis(condId,conf){ const f=readFarm(); const crop=CROPS.find(c=>c.id===f.crop); const c=CONDITIONS[condId]; const land=f.land||1;
+  let doseHtml=''; if(c.dose){ if(condId==='yellowing'){ doseHtml=`<div class="dose">💊 ${c.chemical[lang]} — ${c.dose.qty} ${c.dose.unit[lang]}</div>`; }
+    else { const tot=Math.round(c.dose.qty*land); doseHtml=`<div class="dose">💊 ${crop[lang]} · ${land} ${t('acres')}: <strong>${tot} ${lang==='kn'?'ಒಟ್ಟು':'total'}</strong> (${c.dose.qty} ${c.dose.unit[lang]})</div>`; } }
+  const sev=c.sev==='ok'?'':(c.sev==='warn'?'warn':'bad'); const pctc=Math.round(conf*100);
+  document.getElementById('diagResult').innerHTML=`<div class="card diag ${sev}" style="margin-top:14px"><div class="muted">${t('detected')}</div>
+    <div class="cond">${t(c.key)}</div><div class="muted" style="margin-top:8px">${t('confidence')}: ${pctc}%</div>
+    <div class="conf-wrap"><div class="conf-bar" style="width:${pctc}%"></div></div>
+    <div class="treat"><h4>${t('organic')}</h4><p>${c.organic[lang]}</p><h4>${t('chemical')}</h4><p>${c.chemical[lang]}</p>${doseHtml}
+      <h4 style="margin-top:12px">${t('prevention')}</h4><p>${c.prevention[lang]}</p></div>
+    <button class="speak" onclick="speak(t(CONDITIONS['${condId}'].key)+'. '+CONDITIONS['${condId}'].organic[lang]+' '+CONDITIONS['${condId}'].chemical[lang]+' '+CONDITIONS['${condId}'].prevention[lang])">${t('listen')}</button></div>`;
+  document.getElementById('diagResult').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function wireDoctor(){ const drop=document.getElementById('drop'); if(!drop) return;
+  const input=document.getElementById('leafInput'), prev=document.getElementById('leafPreview'), btn=document.getElementById('analyzeBtn'), pick=document.getElementById('symptomPick');
+  drop.onclick=()=>input.click();
+  input.onchange=e=>{ const file=e.target.files[0]; if(!file) return; const url=URL.createObjectURL(file); const img=new Image(); img.onload=()=>{ lastImage=img; prev.src=url; prev.classList.remove('hidden'); btn.classList.remove('hidden'); }; img.src=url; };
+  btn.onclick=analyzeLeaf;
+  pick.onchange=e=>{ if(e.target.value) renderDiagnosis(e.target.value,0.6); };
+}
+function speak(text){ if(!('speechSynthesis' in window)) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang=lang==='kn'?'kn-IN':'en-IN'; u.rate=0.95; speechSynthesis.speak(u); }
+function shareApp(){ const data={ title:'Krishi Sahayaka', text:t('shareText'), url:location.href }; if(navigator.share){ navigator.share(data).catch(()=>{}); } else { try{navigator.clipboard.writeText(data.text+' '+data.url);}catch(e){} alert((lang==='kn'?'ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ: ':'Link copied: ')+data.url); } }
+let activeTab="weather";
+function renderPanel(){ const f=readFarm(); const panel=document.getElementById('panel');
+  if(activeTab==='weather') panel.innerHTML=panelWeather(f);
+  else if(activeTab==='doctor'){ panel.innerHTML=panelDoctor(); wireDoctor(); }
+  else if(activeTab==='market') panel.innerHTML=panelMarket(f);
+  else if(activeTab==='advisory') panel.innerHTML=panelAdvisory(f);
+  else if(activeTab==='fertilizer') panel.innerHTML=panelFertilizer(f);
+  else if(activeTab==='schemes') panel.innerHTML=panelSchemes();
+  else if(activeTab==='help') panel.innerHTML=panelHelp();
+  saveProfile();
+}
+document.getElementById('tabs').addEventListener('click',e=>{ const tab=e.target.closest('.tab'); if(!tab) return; document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); tab.classList.add('active'); activeTab=tab.dataset.tab; renderPanel(); });
+document.getElementById('goBtn').addEventListener('click',()=>{ renderPanel(); document.getElementById('tabs').scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('district').addEventListener('change',()=>{ fillTaluks(); renderPanel(); });
+document.getElementById('taluk').addEventListener('change',saveProfile);
+document.getElementById('hobli').addEventListener('input',saveProfile);
+document.getElementById('village').addEventListener('input',saveProfile);
+['crop','land','irrigation'].forEach(id=>document.getElementById(id).addEventListener('change',renderPanel));
+document.getElementById('langBtn').onclick=()=>{ lang=lang==='en'?'kn':'en'; localStorage.setItem('ks_lang',lang); renderStatic(); restoreProfile(); renderPanel(); };
+const themeBtn=document.getElementById('themeBtn');
+function applyTheme(th){ document.documentElement.setAttribute('data-theme',th); themeBtn.textContent=th==='dark'?'☀️':'🌙'; document.querySelector('meta[name=theme-color]').content=th==='dark'?'#052e16':'#166534'; }
+let theme=localStorage.getItem('ks_theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'); applyTheme(theme);
+themeBtn.onclick=()=>{ theme=theme==='dark'?'light':'dark'; localStorage.setItem('ks_theme',theme); applyTheme(theme); };
+function restoreProfile(){ try{ const p=JSON.parse(localStorage.getItem('ks_profile')||'null'); if(!p) return;
+  if(p.district){ document.getElementById('district').value=p.district; fillTaluks(); }
+  if(p.taluk) document.getElementById('taluk').value=p.taluk;
+  if(p.hobli!=null) document.getElementById('hobli').value=p.hobli;
+  if(p.village!=null) document.getElementById('village').value=p.village;
+  if(p.crop) document.getElementById('crop').value=p.crop;
+  if(p.land!=null) document.getElementById('land').value=p.land;
+  if(p.irrigation) document.getElementById('irrigation').value=p.irrigation; }catch(e){} }
+renderStatic(); restoreProfile(); renderPanel();
+</script>
+</body>
+</html>
